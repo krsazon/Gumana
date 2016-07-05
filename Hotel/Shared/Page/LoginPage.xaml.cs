@@ -38,7 +38,7 @@ namespace Hotel.Page
              //  if (user != null)
              //  {
              //      var users = context.Users.FirstOrDefault(c => c.Username == txtUsername.Text);
-                 MethodsClass.ShowNotification("ERROR");
+                 MethodsClass.ShowNotification("ERROR KAY SWEET");
                  //var frame = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<NavigationFrame>(this);
                  //MainViewPage page = new MainViewPage();
                  //frame.Navigate(page);
