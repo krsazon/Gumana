@@ -38,8 +38,8 @@ namespace Hotel.Booking.Page
 
         public void Refresh()
         {
-            dtReserved.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
-            dtArrival.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+            //dtReserved.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+            //dtArrival.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
             using (var context = new DatabaseContext())
             {
                 var Reservations = context.Reservations.ToList();
@@ -217,6 +217,21 @@ namespace Hotel.Booking.Page
         {
             var hello = DateTime.DaysInMonth(DateTime.Today.Year, 2);
             MessageBox.Show(hello.ToString());
+        }
+
+        private void btnNextMonth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnPreviousMonth_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnViewAll_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

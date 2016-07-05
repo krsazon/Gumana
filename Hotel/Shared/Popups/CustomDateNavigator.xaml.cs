@@ -29,6 +29,7 @@ namespace Hotel.Shared.Popups
 
         protected override void CalendarViewChanged(DateNavigatorCalendarView oldState, DateNavigatorCalendarView newState)
         {
+            MessageBox.Show("s");
             if (newState == DateNavigatorCalendarView.Year)
             {
                 newState = DateNavigatorCalendarView.Years;
