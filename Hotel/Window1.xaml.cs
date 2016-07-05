@@ -29,7 +29,7 @@ namespace Hotel
             DateTime zxc = DateTime.Parse("10:54 AM");
 
             zxc = zxc.AddHours(2);
-
+            MessageBox.Show("askdhasd");
             MessageBox.Show(zxc.ToString());
         }
     }
