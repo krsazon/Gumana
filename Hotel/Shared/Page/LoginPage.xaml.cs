@@ -34,21 +34,21 @@ namespace Hotel.Page
         {
             using (var context = new DatabaseContext())
             {
-                var user = context.Users.Where(c => c.Username == this.txtUsername.Text.ToLower() && c.Password == this.txtPassword.Text).SingleOrDefault();
-                if (user != null)
-                {
-                    var users = context.Users.FirstOrDefault(c => c.Username == txtUsername.Text);
+                //var user = context.Users.Where(c => c.Username == this.txtUsername.Text.ToLower() && c.Password == this.txtPassword.Text).SingleOrDefault();
+                //if (user != null)
+                //{
+                //    var users = context.Users.FirstOrDefault(c => c.Username == txtUsername.Text);
 
-                    var frame = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<NavigationFrame>(this);
-                    MainViewPage page = new MainViewPage();
-                    frame.Navigate(page);
-                    tx = users.Name;
-                    ty = users.UserType;
-                }
-                else
-                {
-                    MethodsClass.ShowNotification("Logged in failed.");
-                }
+                var frame = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<NavigationFrame>(this);
+                MainViewPage page = new MainViewPage();
+                frame.Navigate(page);
+                //    tx = users.Name;
+                //    ty = users.UserType;
+                //}
+                //else
+                //{
+                //    MethodsClass.ShowNotification("Logged in failed.");
+                //}
             }
         }
 
