@@ -38,10 +38,10 @@ namespace Hotel.Page
              //  if (user != null)
              //  {
              //      var users = context.Users.FirstOrDefault(c => c.Username == txtUsername.Text);
-                 MethodsClass.ShowNotification("Welcome, you have successfully logged in.");
-                 var frame = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<NavigationFrame>(this);
-                 MainViewPage page = new MainViewPage();
-                 frame.Navigate(page);
+                 MethodsClass.ShowNotification("ERROR");
+                 //var frame = DevExpress.Xpf.Core.Native.LayoutHelper.FindParentObject<NavigationFrame>(this);
+                 //MainViewPage page = new MainViewPage();
+                 //frame.Navigate(page);
                //  tx = users.Name;
                //  ty = users.UserType;
                //}
