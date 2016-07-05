@@ -341,6 +341,7 @@ namespace Hotel.Page
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show("asas");
             functionsClicked = false;
             masterdataClicked = false;
             reportsClicked = false;
