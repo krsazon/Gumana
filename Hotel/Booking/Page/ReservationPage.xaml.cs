@@ -24,6 +24,7 @@ namespace Hotel.Booking.Page
     /// </summary>
     public partial class ReservationPage : UserControl
     {
+
         int selectedId = 0;
         public ReservationPage()
         {
@@ -38,28 +39,34 @@ namespace Hotel.Booking.Page
 
         public void Refresh()
         {
-            dtReserved.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
-            dtArrival.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+            for (int i = 0; i < 200; i++)
+            {
+                
+            }
             using (var context = new DatabaseContext())
             {
                 var Reservations = context.Reservations.ToList();
                 var viewList = new List<ReservationView>();
+            
                 foreach (var reservation in Reservations)
                 {
-                    var room = context.Rooms.FirstOrDefault(c => c.RoomId == reservation.RoomId);
-                    viewList.Add(new ReservationView()
+                    if (DateTime.Parse(dtStartMonth.Text) <= reservation.RequestDate && DateTime.Parse(dtEndMonth.Text) >= reservation.RequestDate)
                     {
-                        ReservationId = reservation.ReservationId,
-                        ReservationFee = reservation.ReservationFee.ToString(),
-                        CustomerName = reservation.CustomerName,
-                        RoomNumber = room.RoomNumber.ToString(),
-                        DateReserved = reservation.DateReserved.ToString("MM/dd/yyyy"),
-                        ArrivalDate = reservation.ArrivalDate.ToString("MM/dd/yyyy"),
-                        ArrivalTime = reservation.ArrivalTime,
-                        RequestDate = reservation.RequestDate.ToString("MM/dd/yyyy"),
-                        RequestTime = reservation.RequestTime,
-                        CardNumber = reservation.CardNumber,
-                    });
+                        var room = context.Rooms.FirstOrDefault(c => c.RoomId == reservation.RoomId);
+                        viewList.Add(new ReservationView()
+                        {
+                            ReservationId = reservation.ReservationId,
+                            ReservationFee = reservation.ReservationFee.ToString(),
+                            CustomerName = reservation.CustomerName,
+                            RoomNumber = room.RoomNumber.ToString(),
+                            DateReserved = reservation.DateReserved.ToString("MM/dd/yyyy"),
+                            ArrivalDate = reservation.ArrivalDate.ToString("MM/dd/yyyy"),
+                            ArrivalTime = reservation.ArrivalTime,
+                            RequestDate = reservation.RequestDate.ToString("MM/dd/yyyy"),
+                            RequestTime = reservation.RequestTime,
+                            CardNumber = reservation.CardNumber,
+                        });
+                    }
                 }
                 dgReservations.ItemsSource = viewList;
                 //dgReservations.BestFitColumns();
@@ -68,7 +75,21 @@ namespace Hotel.Booking.Page
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            var EndMonth = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
+            dtStartMonth.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+            dtEndMonth.Text = DateTime.Now.Month.ToString() + "/" + EndMonth + "/" + DateTime.Now.Year.ToString();
+            TodayMonthInterval();
             Refresh();
+        }
+
+        public void TodayMonthInterval()
+        {
+            if (dtStartMonth.Text == "All" && dtEndMonth.Text == "All")
+            { 
+            var EndMonth = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
+            dtStartMonth.Text = DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + DateTime.Now.Year.ToString();
+            dtEndMonth.Text = DateTime.Now.Month.ToString() + "/" + EndMonth + "/" + DateTime.Now.Year.ToString();
+            }
         }
 
         private void btnInHouse_Click(object sender, RoutedEventArgs e)
@@ -217,6 +238,77 @@ namespace Hotel.Booking.Page
         {
             var hello = DateTime.DaysInMonth(DateTime.Today.Year, 2);
             MessageBox.Show(hello.ToString());
+        }
+
+        private void btnNextMonth_Click(object sender, RoutedEventArgs e)
+        {
+            TodayMonthInterval();
+            DateTime addmonth = DateTime.Parse(dtStartMonth.Text);
+            
+            var addedmonth = addmonth.AddMonths(1);
+
+            dtStartMonth.Text = addedmonth.ToString("MM/dd/yyyy");
+
+            var daysinmonth = DateTime.DaysInMonth(addmonth.Year, addedmonth.Month);
+
+            int formula = addedmonth.Day + daysinmonth - 1;
+
+            string endmonth = addedmonth.Month +"/" + formula.ToString() +"/"+ addedmonth.Year;
+            DateTime datetimeendmonth = DateTime.Parse(endmonth);
+            dtEndMonth.Text = datetimeendmonth.ToString("MM/dd/yyyy");
+            Refresh();
+         
+        }
+
+        private void btnPreviousMonth_Click(object sender, RoutedEventArgs e)
+        {
+            TodayMonthInterval();
+            DateTime addmonth = DateTime.Parse(dtStartMonth.Text);
+
+            var addedmonth = addmonth.AddMonths(-1);
+
+            dtStartMonth.Text = addedmonth.ToString("MM/dd/yyyy");
+
+            var daysinmonth = DateTime.DaysInMonth(addmonth.Year, addedmonth.Month);
+
+            int formula = addedmonth.Day + daysinmonth - 1;
+
+            string endmonth = addedmonth.Month + "/" + formula.ToString() + "/" + addedmonth.Year;
+            DateTime datetimeendmonth = DateTime.Parse(endmonth);
+            dtEndMonth.Text = datetimeendmonth.ToString("MM/dd/yyyy");
+            Refresh();
+           
+        }
+
+        private void btnViewAll_Click(object sender, RoutedEventArgs e)
+        {
+            dtStartMonth.Text = "All";
+            dtEndMonth.Text = "All";
+            using (var context = new DatabaseContext())
+            {
+                var Reservations = context.Reservations.ToList();
+                var viewList = new List<ReservationView>();
+
+                foreach (var reservation in Reservations)
+                {       
+                        var room = context.Rooms.FirstOrDefault(c => c.RoomId == reservation.RoomId);
+                        viewList.Add(new ReservationView()
+                        {
+                            ReservationId = reservation.ReservationId,
+                            ReservationFee = reservation.ReservationFee.ToString(),
+                            CustomerName = reservation.CustomerName,
+                            RoomNumber = room.RoomNumber.ToString(),
+                            DateReserved = reservation.DateReserved.ToString("MM/dd/yyyy"),
+                            ArrivalDate = reservation.ArrivalDate.ToString("MM/dd/yyyy"),
+                            ArrivalTime = reservation.ArrivalTime,
+                            RequestDate = reservation.RequestDate.ToString("MM/dd/yyyy"),
+                            RequestTime = reservation.RequestTime,
+                            CardNumber = reservation.CardNumber,
+                        });                  
+                }
+                dgReservations.ItemsSource = viewList;
+                //dgReservations.BestFitColumns();
+            }
         }
     }
 
